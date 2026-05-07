@@ -1,3 +1,4 @@
+pub mod cooperative_matrix2;
 pub mod cooperative_vector;
 pub mod copy_memory_indirect;
 pub mod coverage_reduction_mode;
