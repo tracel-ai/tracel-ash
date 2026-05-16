@@ -2600,6 +2600,9 @@ pub fn generate_struct(
                     "ignored" => {
                         quote!(#[deprecated = "functionality described by this member no longer operates"])
                     }
+                    "unused" => {
+                        quote!(#[deprecated = "functionality described by this member is unused"])
+                    }
                     x => panic!("Unknown deprecation reason {x}"),
                 });
                 PreprocessedMember {
