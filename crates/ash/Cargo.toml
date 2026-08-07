@@ -25,7 +25,7 @@ version = { workspace = true }
 ash = "0.38.0"
 # Closest to the feature set we need, but might replace it with a custom macro to support u32 as
 # a bitfield representation
-c2rust-bitfields = "0.22"
+c2rust-bitfields = "0.20"
 
 [dev-dependencies]
 trybuild = "1.0"
