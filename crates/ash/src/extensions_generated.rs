@@ -235,6 +235,298 @@ pub mod amd {
             crate::vk::AMD_GPU_SHADER_INT16_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_AMD_gpa_interface"]
+    pub mod gpa_interface {
+        use crate::vk::*;
+        use core::ffi::*;
+        pub use {
+            crate::vk::AMD_GPA_INTERFACE_NAME as NAME,
+            crate::vk::AMD_GPA_INTERFACE_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_AMD_gpa_interface device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: ash::vk::Device,
+        }
+        impl Device {
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> ash::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_AMD_gpa_interface device-level function pointers"]
+        pub struct DeviceFn {
+            pub create_gpa_session_amd: PFN_vkCreateGpaSessionAMD,
+            pub destroy_gpa_session_amd: PFN_vkDestroyGpaSessionAMD,
+            pub set_gpa_device_clock_mode_amd: PFN_vkSetGpaDeviceClockModeAMD,
+            pub get_gpa_device_clock_info_amd: PFN_vkGetGpaDeviceClockInfoAMD,
+            pub cmd_begin_gpa_session_amd: PFN_vkCmdBeginGpaSessionAMD,
+            pub cmd_end_gpa_session_amd: PFN_vkCmdEndGpaSessionAMD,
+            pub cmd_begin_gpa_sample_amd: PFN_vkCmdBeginGpaSampleAMD,
+            pub cmd_end_gpa_sample_amd: PFN_vkCmdEndGpaSampleAMD,
+            pub get_gpa_session_status_amd: PFN_vkGetGpaSessionStatusAMD,
+            pub get_gpa_session_results_amd: PFN_vkGetGpaSessionResultsAMD,
+            pub reset_gpa_session_amd: PFN_vkResetGpaSessionAMD,
+            pub cmd_copy_gpa_session_results_amd: PFN_vkCmdCopyGpaSessionResultsAMD,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    create_gpa_session_amd: unsafe {
+                        unsafe extern "system" fn create_gpa_session_amd(
+                            _device: ash::vk::Device,
+                            _p_create_info: *const GpaSessionCreateInfoAMD<'_>,
+                            _p_allocator: *const AllocationCallbacks,
+                            _p_gpa_session: *mut GpaSessionAMD,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(create_gpa_session_amd)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCreateGpaSessionAMD\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            create_gpa_session_amd
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    destroy_gpa_session_amd: unsafe {
+                        unsafe extern "system" fn destroy_gpa_session_amd(
+                            _device: ash::vk::Device,
+                            _gpa_session: GpaSessionAMD,
+                            _p_allocator: *const AllocationCallbacks,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(destroy_gpa_session_amd)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkDestroyGpaSessionAMD\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            destroy_gpa_session_amd
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    set_gpa_device_clock_mode_amd: unsafe {
+                        unsafe extern "system" fn set_gpa_device_clock_mode_amd(
+                            _device: ash::vk::Device,
+                            _p_info: *mut GpaDeviceClockModeInfoAMD<'_>,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(set_gpa_device_clock_mode_amd)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkSetGpaDeviceClockModeAMD\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            set_gpa_device_clock_mode_amd
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_gpa_device_clock_info_amd: unsafe {
+                        unsafe extern "system" fn get_gpa_device_clock_info_amd(
+                            _device: ash::vk::Device,
+                            _p_info: *mut GpaDeviceGetClockInfoAMD<'_>,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_gpa_device_clock_info_amd)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkGetGpaDeviceClockInfoAMD\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_gpa_device_clock_info_amd
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    cmd_begin_gpa_session_amd: unsafe {
+                        unsafe extern "system" fn cmd_begin_gpa_session_amd(
+                            _command_buffer: CommandBuffer,
+                            _gpa_session: GpaSessionAMD,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_begin_gpa_session_amd)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginGpaSessionAMD\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            cmd_begin_gpa_session_amd
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    cmd_end_gpa_session_amd: unsafe {
+                        unsafe extern "system" fn cmd_end_gpa_session_amd(
+                            _command_buffer: CommandBuffer,
+                            _gpa_session: GpaSessionAMD,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_end_gpa_session_amd)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdEndGpaSessionAMD\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            cmd_end_gpa_session_amd
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    cmd_begin_gpa_sample_amd: unsafe {
+                        unsafe extern "system" fn cmd_begin_gpa_sample_amd(
+                            _command_buffer: CommandBuffer,
+                            _gpa_session: GpaSessionAMD,
+                            _p_gpa_sample_begin_info: *const GpaSampleBeginInfoAMD<'_>,
+                            _p_sample_id: *mut u32,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_begin_gpa_sample_amd)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkCmdBeginGpaSampleAMD\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            cmd_begin_gpa_sample_amd
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    cmd_end_gpa_sample_amd: unsafe {
+                        unsafe extern "system" fn cmd_end_gpa_sample_amd(
+                            _command_buffer: CommandBuffer,
+                            _gpa_session: GpaSessionAMD,
+                            _sample_id: u32,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_end_gpa_sample_amd)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkCmdEndGpaSampleAMD\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            cmd_end_gpa_sample_amd
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_gpa_session_status_amd: unsafe {
+                        unsafe extern "system" fn get_gpa_session_status_amd(
+                            _device: ash::vk::Device,
+                            _gpa_session: GpaSessionAMD,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_gpa_session_status_amd)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkGetGpaSessionStatusAMD\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_gpa_session_status_amd
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_gpa_session_results_amd: unsafe {
+                        unsafe extern "system" fn get_gpa_session_results_amd(
+                            _device: ash::vk::Device,
+                            _gpa_session: GpaSessionAMD,
+                            _sample_id: u32,
+                            _p_size_in_bytes: *mut usize,
+                            _p_data: *mut c_void,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_gpa_session_results_amd)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkGetGpaSessionResultsAMD\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_gpa_session_results_amd
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    reset_gpa_session_amd: unsafe {
+                        unsafe extern "system" fn reset_gpa_session_amd(
+                            _device: ash::vk::Device,
+                            _gpa_session: GpaSessionAMD,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(reset_gpa_session_amd)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(b"vkResetGpaSessionAMD\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            reset_gpa_session_amd
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    cmd_copy_gpa_session_results_amd: unsafe {
+                        unsafe extern "system" fn cmd_copy_gpa_session_results_amd(
+                            _command_buffer: CommandBuffer,
+                            _gpa_session: GpaSessionAMD,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(cmd_copy_gpa_session_results_amd)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkCmdCopyGpaSessionResultsAMD\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            cmd_copy_gpa_session_results_amd
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
+    }
     #[doc = "VK_AMD_mixed_attachment_samples"]
     pub mod mixed_attachment_samples {
         pub use {
@@ -1794,6 +2086,13 @@ pub mod arm {
                 }
             }
         }
+    }
+    #[doc = "VK_ARM_tensor_controls"]
+    pub mod tensor_controls {
+        pub use {
+            crate::vk::ARM_TENSOR_CONTROLS_NAME as NAME,
+            crate::vk::ARM_TENSOR_CONTROLS_SPEC_VERSION as SPEC_VERSION,
+        };
     }
     #[doc = "VK_ARM_pipeline_opacity_micromap"]
     pub mod pipeline_opacity_micromap {
@@ -6280,6 +6579,13 @@ pub mod ext {
             crate::vk::EXT_PIPELINE_CREATION_CACHE_CONTROL_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_EXT_shader_split_barrier"]
+    pub mod shader_split_barrier {
+        pub use {
+            crate::vk::EXT_SHADER_SPLIT_BARRIER_NAME as NAME,
+            crate::vk::EXT_SHADER_SPLIT_BARRIER_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_EXT_metal_objects"]
     pub mod metal_objects {
         use crate::vk::*;
@@ -10662,6 +10968,13 @@ pub mod ext {
             crate::vk::EXT_VERTEX_ATTRIBUTE_ROBUSTNESS_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_EXT_multisampled_render_to_swapchain"]
+    pub mod multisampled_render_to_swapchain {
+        pub use {
+            crate::vk::EXT_MULTISAMPLED_RENDER_TO_SWAPCHAIN_NAME as NAME,
+            crate::vk::EXT_MULTISAMPLED_RENDER_TO_SWAPCHAIN_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_EXT_fragment_density_map_offset"]
     pub mod fragment_density_map_offset {
         use crate::vk::*;
@@ -10828,6 +11141,13 @@ pub mod ext {
         pub use {
             crate::vk::EXT_SHADER_SUBGROUP_PARTITIONED_NAME as NAME,
             crate::vk::EXT_SHADER_SUBGROUP_PARTITIONED_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_EXT_shader_ocp_microscaling_types"]
+    pub mod shader_ocp_microscaling_types {
+        pub use {
+            crate::vk::EXT_SHADER_OCP_MICROSCALING_TYPES_NAME as NAME,
+            crate::vk::EXT_SHADER_OCP_MICROSCALING_TYPES_SPEC_VERSION as SPEC_VERSION,
         };
     }
     #[doc = "VK_EXT_primitive_restart_index"]
@@ -11800,6 +12120,13 @@ pub mod img {
         pub use {
             crate::vk::IMG_RELAXED_LINE_RASTERIZATION_NAME as NAME,
             crate::vk::IMG_RELAXED_LINE_RASTERIZATION_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_IMG_filter_linear_2d"]
+    pub mod filter_linear_2d {
+        pub use {
+            crate::vk::IMG_FILTER_LINEAR_2D_NAME as NAME,
+            crate::vk::IMG_FILTER_LINEAR_2D_SPEC_VERSION as SPEC_VERSION,
         };
     }
 }
@@ -20534,6 +20861,13 @@ pub mod khr {
             crate::vk::KHR_VIDEO_MAINTENANCE2_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_KHR_video_encode_feedback2"]
+    pub mod video_encode_feedback2 {
+        pub use {
+            crate::vk::KHR_VIDEO_ENCODE_FEEDBACK2_NAME as NAME,
+            crate::vk::KHR_VIDEO_ENCODE_FEEDBACK2_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_KHR_depth_clamp_zero_one"]
     pub mod depth_clamp_zero_one {
         pub use {
@@ -20553,6 +20887,13 @@ pub mod khr {
         pub use {
             crate::vk::KHR_PRESENT_MODE_FIFO_LATEST_READY_NAME as NAME,
             crate::vk::KHR_PRESENT_MODE_FIFO_LATEST_READY_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_KHR_opacity_micromap"]
+    pub mod opacity_micromap {
+        pub use {
+            crate::vk::KHR_OPACITY_MICROMAP_NAME as NAME,
+            crate::vk::KHR_OPACITY_MICROMAP_SPEC_VERSION as SPEC_VERSION,
         };
     }
     #[doc = "VK_KHR_maintenance10"]
@@ -20626,6 +20967,13 @@ pub mod khr {
         pub use {
             crate::vk::KHR_MAINTENANCE11_NAME as NAME,
             crate::vk::KHR_MAINTENANCE11_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_KHR_extended_flags"]
+    pub mod extended_flags {
+        pub use {
+            crate::vk::KHR_EXTENDED_FLAGS_NAME as NAME,
+            crate::vk::KHR_EXTENDED_FLAGS_SPEC_VERSION as SPEC_VERSION,
         };
     }
 }
@@ -22490,10 +22838,195 @@ pub mod nv {
     }
     #[doc = "VK_NV_low_latency"]
     pub mod low_latency {
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NV_LOW_LATENCY_NAME as NAME,
             crate::vk::NV_LOW_LATENCY_SPEC_VERSION as SPEC_VERSION,
         };
+        #[doc = "VK_NV_low_latency device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: ash::vk::Device,
+        }
+        impl Device {
+            pub fn new(instance: &ash::Instance, device: &ash::Device) -> Self {
+                let handle = device.handle();
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> ash::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_NV_low_latency device-level function pointers"]
+        pub struct DeviceFn {
+            pub set_latency_sleep_mode_legacy_nv: PFN_vkSetLatencySleepModeLegacyNV,
+            pub latency_sleep_legacy_nv: PFN_vkLatencySleepLegacyNV,
+            pub set_latency_marker_legacy_nv: PFN_vkSetLatencyMarkerLegacyNV,
+            pub get_latency_timings_legacy_nv: PFN_vkGetLatencyTimingsLegacyNV,
+            pub queue_notify_out_of_band_legacy_nv: PFN_vkQueueNotifyOutOfBandLegacyNV,
+            pub get_sleep_status_legacy_nv: PFN_vkGetSleepStatusLegacyNV,
+            pub shutdown_latency_device_legacy_nv: PFN_vkShutdownLatencyDeviceLegacyNV,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    set_latency_sleep_mode_legacy_nv: unsafe {
+                        unsafe extern "system" fn set_latency_sleep_mode_legacy_nv(
+                            _device: ash::vk::Device,
+                            _low_latency_mode: Bool32,
+                            _low_latency_boost: Bool32,
+                            _minimum_interval_us: u32,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(set_latency_sleep_mode_legacy_nv)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkSetLatencySleepModeLegacyNV\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            set_latency_sleep_mode_legacy_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    latency_sleep_legacy_nv: unsafe {
+                        unsafe extern "system" fn latency_sleep_legacy_nv(
+                            _device: ash::vk::Device,
+                            _signal_semaphore: Semaphore,
+                            _value: u64,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(latency_sleep_legacy_nv)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkLatencySleepLegacyNV\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            latency_sleep_legacy_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    set_latency_marker_legacy_nv: unsafe {
+                        unsafe extern "system" fn set_latency_marker_legacy_nv(
+                            _device: ash::vk::Device,
+                            _frame_id: u64,
+                            _marker: u32,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(set_latency_marker_legacy_nv)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkSetLatencyMarkerLegacyNV\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            set_latency_marker_legacy_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_latency_timings_legacy_nv: unsafe {
+                        unsafe extern "system" fn get_latency_timings_legacy_nv(
+                            _device: ash::vk::Device,
+                            _p_timings: *mut c_void,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_latency_timings_legacy_nv)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkGetLatencyTimingsLegacyNV\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_latency_timings_legacy_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    queue_notify_out_of_band_legacy_nv: unsafe {
+                        unsafe extern "system" fn queue_notify_out_of_band_legacy_nv(
+                            _queue: Queue,
+                            _queue_type: u32,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(queue_notify_out_of_band_legacy_nv)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkQueueNotifyOutOfBandLegacyNV\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            queue_notify_out_of_band_legacy_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_sleep_status_legacy_nv: unsafe {
+                        unsafe extern "system" fn get_sleep_status_legacy_nv(
+                            _device: ash::vk::Device,
+                            _p_low_latency_mode: *mut Bool32,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_sleep_status_legacy_nv)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkGetSleepStatusLegacyNV\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_sleep_status_legacy_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    shutdown_latency_device_legacy_nv: unsafe {
+                        unsafe extern "system" fn shutdown_latency_device_legacy_nv(
+                            _device: ash::vk::Device,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(shutdown_latency_device_legacy_nv)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkShutdownLatencyDeviceLegacyNV\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            shutdown_latency_device_legacy_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
     }
     #[doc = "VK_NV_fragment_shading_rate_enums"]
     pub mod fragment_shading_rate_enums {
@@ -24088,6 +24621,13 @@ pub mod nv {
             }
         }
     }
+    #[doc = "VK_NV_cooperative_matrix_decode_vector"]
+    pub mod cooperative_matrix_decode_vector {
+        pub use {
+            crate::vk::NV_COOPERATIVE_MATRIX_DECODE_VECTOR_NAME as NAME,
+            crate::vk::NV_COOPERATIVE_MATRIX_DECODE_VECTOR_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
 }
 #[doc = "Extensions tagged NVX"]
 pub mod nvx {
@@ -24551,6 +25091,13 @@ pub mod qcom {
             crate::vk::QCOM_COOPERATIVE_MATRIX_CONVERSION_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_QCOM_elapsed_timer_query"]
+    pub mod elapsed_timer_query {
+        pub use {
+            crate::vk::QCOM_ELAPSED_TIMER_QUERY_NAME as NAME,
+            crate::vk::QCOM_ELAPSED_TIMER_QUERY_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_QCOM_render_pass_transform"]
     pub mod render_pass_transform {
         pub use {
@@ -24631,6 +25178,20 @@ pub mod qcom {
                 }
             }
         }
+    }
+    #[doc = "VK_QCOM_image_processing3"]
+    pub mod image_processing3 {
+        pub use {
+            crate::vk::QCOM_IMAGE_PROCESSING3_NAME as NAME,
+            crate::vk::QCOM_IMAGE_PROCESSING3_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_QCOM_shader_multiple_wait_queues"]
+    pub mod shader_multiple_wait_queues {
+        pub use {
+            crate::vk::QCOM_SHADER_MULTIPLE_WAIT_QUEUES_NAME as NAME,
+            crate::vk::QCOM_SHADER_MULTIPLE_WAIT_QUEUES_SPEC_VERSION as SPEC_VERSION,
+        };
     }
     #[doc = "VK_QCOM_tile_shading"]
     pub mod tile_shading {
