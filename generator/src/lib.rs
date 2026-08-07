@@ -3567,10 +3567,13 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
 
     let vk_include = vk_headers_dir.join("include");
 
-    let mut bindings = bindgen::Builder::default().use_core().clang_arg(format!(
-        "-I{}",
-        vk_include.to_str().expect("Valid UTF8 string")
-    ));
+    let mut bindings = bindgen::Builder::default()
+        .use_core()
+        .clang_arg(format!(
+            "-I{}",
+            vk_include.to_str().expect("Valid UTF8 string")
+        ))
+        .clang_arg("--target=x86_64-unknown-linux-gnu");
 
     let (header_includes, header_types) = extract_native_types(&spec2);
 

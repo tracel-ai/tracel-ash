@@ -17,7 +17,7 @@ keywords = ["gamedev", "graphics", "vulkan", "bindings"]
 license = "MIT OR Apache-2.0"
 name = "tracel-ash"
 readme = "../README.md"
-repository = "https://github.com/ash-rs/ash"
+repository = "https://github.com/tracel-ai/tracel-ash"
 rust-version = "1.69.0"
 version = { workspace = true }
 
@@ -25,7 +25,7 @@ version = { workspace = true }
 ash = "0.38.0"
 # Closest to the feature set we need, but might replace it with a custom macro to support u32 as
 # a bitfield representation
-c2rust-bitfields = "0.20"
+c2rust-bitfields = "0.22"
 
 [dev-dependencies]
 trybuild = "1.0"
